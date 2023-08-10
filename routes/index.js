@@ -29,6 +29,8 @@ async function addFriendToCollection(name){
     birthday: new Date(),
     alive: true,
   });
+  newFriend.name = "Friedrich"
+  newFriend.alive = false
   newFriend
     .save()
     .then(
@@ -37,7 +39,7 @@ async function addFriendToCollection(name){
     )
 }
 
-
+// addFriendToCollection("testtesti")
 // Define the database URL to connect to.
 const mongoDB = process.env.MONGODB_URL
 // Wait for database to connect, logging an error if there is a problem
@@ -48,12 +50,11 @@ async function main() {
 }
 router.get('/', async (req, res) => {
   try{
-    const friendsFromDB = await FriendModel.find({})
+    const friendsFromDB = await FriendModel.find({name: 'Friedrich'})
     res.send(friendsFromDB)
   } catch(err){
     console.log(err)
   }
-
 });
 
 module.exports = router;
