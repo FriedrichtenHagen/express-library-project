@@ -50,7 +50,11 @@ async function main() {
 }
 router.get('/', async (req, res) => {
   try{
-    const friendsFromDB = await FriendModel.find({name: 'Friedrich'})
+    const friendsFromDB = await FriendModel
+      .find({})
+      .where("name")
+      .equals('Friedrich')
+      
     res.send(friendsFromDB)
   } catch(err){
     console.log(err)
