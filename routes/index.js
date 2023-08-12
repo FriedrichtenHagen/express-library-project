@@ -1,25 +1,8 @@
 var express = require('express');
 var router = express.Router();
-
-require("dotenv").config()
-const mongoose = require("mongoose");
 const app = require('../app');
-
-
-mongoose.set("strictQuery", false);
-const Schema = mongoose.Schema
-const testSchema = new Schema({
-  name: {
-    type: String,
-    min: 2,
-    max: 10,
-    required: true, 
-  }, 
-  birthday: Date,
-  alive: Boolean, 
-  friends: [], 
-})
-const FriendModel = mongoose.model("Friends", testSchema)
+const dbConnection = require('../database/dbConnection')
+const FriendModel = require('../models/FriendModel')
 
 
 
@@ -39,15 +22,8 @@ async function addFriendToCollection(name){
     )
 }
 
-// addFriendToCollection("testtesti")
-// Define the database URL to connect to.
-const mongoDB = process.env.MONGODB_URL
-// Wait for database to connect, logging an error if there is a problem
-main().catch((err) => console.log(err));
-async function main() {
-  await mongoose.connect(mongoDB);
-  console.log("Pinged your deployment. You successfully connected to MongoDB!");
-}
+dbConnection()
+
 router.get('/', async (req, res) => {
   try{
     const friendsFromDB = await FriendModel
