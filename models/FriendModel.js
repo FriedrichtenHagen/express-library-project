@@ -11,7 +11,7 @@ const friendSchema = new Schema({
   }, 
   birthday: Date,
   alive: Boolean, 
-  friends: [], 
+  city: String, 
 })
 const FriendModel = mongoose.model("Friends", friendSchema)
 
